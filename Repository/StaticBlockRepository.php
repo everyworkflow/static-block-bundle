@@ -8,15 +8,12 @@ declare(strict_types=1);
 
 namespace EveryWorkflow\StaticBlockBundle\Repository;
 
-use EveryWorkflow\CoreBundle\Annotation\RepoDocument;
 use EveryWorkflow\MongoBundle\Repository\BaseDocumentRepository;
+use EveryWorkflow\MongoBundle\Support\Attribute\RepositoryAttribute;
 use EveryWorkflow\StaticBlockBundle\Document\StaticBlockDocument;
 
-/**
- * @RepoDocument(doc_name=StaticBlockDocument::class)
- */
+#[RepositoryAttribute(documentClass: StaticBlockDocument::class, primaryKey: 'block_key')]
 class StaticBlockRepository extends BaseDocumentRepository implements StaticBlockRepositoryInterface
 {
-    protected string $collectionName = 'static_block_collection';
-    protected array $indexNames = [StaticBlockDocument::KEY_BLOCK_KEY];
+    // Something
 }

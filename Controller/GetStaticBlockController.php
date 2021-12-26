@@ -6,14 +6,13 @@
 
 declare(strict_types=1);
 
-namespace EveryWorkflow\StaticBlockBundle\Controller\Admin;
+namespace EveryWorkflow\StaticBlockBundle\Controller;
 
-use EveryWorkflow\CoreBundle\Annotation\EWFRoute;
+use EveryWorkflow\CoreBundle\Annotation\EwRoute;
 use EveryWorkflow\StaticBlockBundle\Form\StaticBlockFormInterface;
 use EveryWorkflow\StaticBlockBundle\Repository\StaticBlockRepositoryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 
 class GetStaticBlockController extends AbstractController
 {
@@ -28,15 +27,22 @@ class GetStaticBlockController extends AbstractController
         $this->staticBlockRepository = $staticBlockRepository;
     }
 
-    /**
-     * @EWFRoute(
-     *     admin_api_path="cms/static-block/{uuid}",
-     *     defaults={"uuid"="create"},
-     *     name="admin.cms.static_block.view",
-     *     methods="GET"
-     * )
-     */
-    public function __invoke(string $uuid, Request $request): JsonResponse
+    #[EwRoute(
+        path: "cms/static-block/{uuid}",
+        name: 'cms.static_block.view',
+        methods: 'GET',
+        permissions: 'cms.static_block.view',
+        swagger: [
+            'parameters' => [
+                [
+                    'name' => 'uuid',
+                    'in' => 'path',
+                    'default' => 'create',
+                ]
+            ]
+        ]
+    )]
+    public function __invoke(string $uuid = 'create'): JsonResponse
     {
         $data = [
             'data_form' => $this->staticBlockForm->toArray(),
@@ -51,6 +57,6 @@ class GetStaticBlockController extends AbstractController
             }
         }
 
-        return (new JsonResponse())->setData($data);
+        return new JsonResponse($data);
     }
 }

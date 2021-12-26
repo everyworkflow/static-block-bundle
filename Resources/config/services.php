@@ -8,7 +8,7 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
 use EveryWorkflow\DataGridBundle\Model\Collection\RepositorySource;
 use EveryWorkflow\DataGridBundle\Model\DataGrid;
-use EveryWorkflow\StaticBlockBundle\Controller\Admin\ListStaticBlockController;
+use EveryWorkflow\StaticBlockBundle\Controller\ListStaticBlockController;
 use EveryWorkflow\StaticBlockBundle\Form\StaticBlockForm;
 use EveryWorkflow\StaticBlockBundle\GridConfig\StaticBlockGridConfig;
 use EveryWorkflow\StaticBlockBundle\Repository\StaticBlockRepository;

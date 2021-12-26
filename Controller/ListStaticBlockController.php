@@ -6,9 +6,9 @@
 
 declare(strict_types=1);
 
-namespace EveryWorkflow\StaticBlockBundle\Controller\Admin;
+namespace EveryWorkflow\StaticBlockBundle\Controller;
 
-use EveryWorkflow\CoreBundle\Annotation\EWFRoute;
+use EveryWorkflow\CoreBundle\Annotation\EwRoute;
 use EveryWorkflow\DataGridBundle\Model\DataGridInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -23,17 +23,17 @@ class ListStaticBlockController extends AbstractController
         $this->dataGrid = $dataGrid;
     }
 
-    /**
-     * @EWFRoute(
-     *     admin_api_path="cms/static-block",
-     *     name="admin.cms.static_block",
-     *     priority=10,
-     *     methods="GET"
-     * )
-     */
+    #[EwRoute(
+        path: "cms/static-block",
+        name: 'cms.static_block',
+        priority: 10,
+        methods: 'GET',
+        permissions: 'cms.static_block.list',
+        swagger: true
+    )]
     public function __invoke(Request $request): JsonResponse
     {
         $dataGrid = $this->dataGrid->setFromRequest($request);
-        return (new JsonResponse())->setData($dataGrid->toArray());
+        return new JsonResponse($dataGrid->toArray());
     }
 }
