@@ -10,7 +10,10 @@
         }
     ],
     "require": {
-        "everyworkflow/base-bundle": "dev-main"
+        "everyworkflow/mongo-bundle": "dev-main",
+        "everyworkflow/data-form-bundle": "dev-main",
+        "everyworkflow/data-grid-bundle": "dev-main",
+        "everyworkflow/page-builder-bundle": "dev-main"
     },
     "autoload": {
         "psr-4": {
