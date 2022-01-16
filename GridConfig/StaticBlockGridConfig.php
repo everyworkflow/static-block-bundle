@@ -9,10 +9,11 @@ declare(strict_types=1);
 namespace EveryWorkflow\StaticBlockBundle\GridConfig;
 
 use EveryWorkflow\CoreBundle\Model\DataObjectInterface;
+use EveryWorkflow\DataGridBundle\BulkAction\ButtonBulkAction;
 use EveryWorkflow\DataGridBundle\Factory\ActionFactoryInterface;
-use EveryWorkflow\DataGridBundle\Model\Action\ButtonAction;
-use EveryWorkflow\DataGridBundle\Model\Action\ConfirmedActionButton;
+use EveryWorkflow\DataGridBundle\HeaderAction\ButtonHeaderAction;
 use EveryWorkflow\DataGridBundle\Model\DataGridConfig;
+use EveryWorkflow\DataGridBundle\RowAction\ButtonRowAction;
 
 class StaticBlockGridConfig extends DataGridConfig implements StaticBlockGridConfigInterface
 {
@@ -44,9 +45,10 @@ class StaticBlockGridConfig extends DataGridConfig implements StaticBlockGridCon
     public function getHeaderActions(): array
     {
         return array_merge([
-            $this->getActionFactory()->create(ButtonAction::class, [
-                'label' => 'Create new section',
-                'path' => '/cms/static-block/create',
+            $this->getActionFactory()->create(ButtonHeaderAction::class, [
+                'button_label' => 'Create new',
+                'button_path' => '/cms/static-block/create',
+                'button_type' => 'primary',
             ]),
         ], parent::getHeaderActions());
     }
@@ -54,15 +56,39 @@ class StaticBlockGridConfig extends DataGridConfig implements StaticBlockGridCon
     public function getRowActions(): array
     {
         return array_merge([
-            $this->getActionFactory()->create(ButtonAction::class, [
-                'label' => 'Edit',
-                'path' => '/cms/static-block/{_id}/edit',
+            $this->getActionFactory()->create(ButtonRowAction::class, [
+                'button_label' => 'Edit',
+                'button_path' => '/cms/static-block/{_id}/edit',
+                'button_type' => 'primary',
             ]),
-            $this->getActionFactory()->create(ConfirmedActionButton::class, [
-                'label' => 'Delete',
-                'path' => '/cms/static-block/{_id}/delete',
+            $this->getActionFactory()->create(ButtonRowAction::class, [
+                'button_label' => 'Delete',
+                'button_label' => 'Delete',
+                'button_type' => 'primary',
+                'path_type' => ButtonRowAction::PATH_TYPE_DELETE_CALL,
+                'is_danger' => true,
+                'is_confirm' => true,
                 'confirm_message' => 'Are you sure, you want to delete this item?',
             ]),
         ], parent::getBulkActions());
+    }
+
+    public function getBulkActions(): array
+    {
+        $bulkActions = [
+            $this->getActionFactory()->create(ButtonBulkAction::class, [
+                'button_label' => 'Enable',
+                'button_path' => '/cms/static-block/bulk-action/enable',
+                'button_type' => 'default',
+                'path_type' => ButtonBulkAction::PATH_TYPE_POST_CALL,
+            ]),
+            $this->getActionFactory()->create(ButtonBulkAction::class, [
+                'button_label' => 'Disable',
+                'button_path' => '/cms/static-block/bulk-action/disable',
+                'button_type' => 'default',
+                'path_type' => ButtonBulkAction::PATH_TYPE_POST_CALL,
+            ]),
+        ];
+        return array_merge($bulkActions, parent::getBulkActions());
     }
 }

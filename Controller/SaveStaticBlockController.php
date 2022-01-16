@@ -87,7 +87,7 @@ class SaveStaticBlockController extends AbstractController
         $item = $this->staticBlockRepository->saveOne($item);
 
         return new JsonResponse([
-            'message' => 'Successfully saved changes.',
+            'detail' => 'Successfully saved changes.',
             'item' => $item->toArray(),
         ]);
     }

@@ -11,12 +11,14 @@ namespace EveryWorkflow\StaticBlockBundle\Document;
 use EveryWorkflow\MongoBundle\Document\BaseDocument;
 use EveryWorkflow\MongoBundle\Document\HelperTrait\CreatedUpdatedHelperTrait;
 use EveryWorkflow\MongoBundle\Document\HelperTrait\StatusHelperTrait;
+use EveryWorkflow\CoreBundle\Validation\Type\StringValidation;
 
 class StaticBlockDocument extends BaseDocument implements StaticBlockDocumentInterface
 {
     use CreatedUpdatedHelperTrait;
     use StatusHelperTrait;
 
+    #[StringValidation(required: true, minLength: 2, maxLength: 255)]
     public function setBlockTitle(string $blockTitle): self
     {
         $this->dataObject->setData(self::KEY_BLOCK_TITLE, $blockTitle);
@@ -28,6 +30,7 @@ class StaticBlockDocument extends BaseDocument implements StaticBlockDocumentInt
         return $this->dataObject->getData(self::KEY_BLOCK_TITLE);
     }
 
+    #[StringValidation(required: true, minLength: 2, maxLength: 50)]
     public function setBlockKey(string $blockKey): self
     {
         $this->dataObject->setData(self::KEY_BLOCK_KEY, $blockKey);
