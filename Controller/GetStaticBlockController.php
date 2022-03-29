@@ -13,6 +13,7 @@ use EveryWorkflow\StaticBlockBundle\Form\StaticBlockFormInterface;
 use EveryWorkflow\StaticBlockBundle\Repository\StaticBlockRepositoryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 class GetStaticBlockController extends AbstractController
 {
@@ -42,11 +43,9 @@ class GetStaticBlockController extends AbstractController
             ]
         ]
     )]
-    public function __invoke(string $uuid = 'create'): JsonResponse
+    public function __invoke(Request $request, string $uuid = 'create'): JsonResponse
     {
-        $data = [
-            'data_form' => $this->staticBlockForm->toArray(),
-        ];
+        $data = [];
 
         if ('create' !== $uuid) {
             try {
@@ -55,6 +54,10 @@ class GetStaticBlockController extends AbstractController
             } catch (\Exception $e) {
                 // ignore if _id doesn't exist
             }
+        }
+
+        if ('data-form' === $request->get('for')) {
+            $data['data_form'] = $this->staticBlockForm->toArray();
         }
 
         return new JsonResponse($data);

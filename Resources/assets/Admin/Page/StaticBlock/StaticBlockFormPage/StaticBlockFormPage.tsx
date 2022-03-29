@@ -49,7 +49,7 @@ const StaticBlockFormPage = () => {
 
         const fetchItem = async () => {
             try {
-                const response: any = await Remote.get('/cms/static-block/' + uuid);
+                const response: any = await Remote.get('/cms/static-block/' + uuid + '?for=data-form');
                 handleResponse(response);
             } catch (error: any) {
                 AlertAction({
