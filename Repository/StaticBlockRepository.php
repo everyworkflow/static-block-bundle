@@ -12,7 +12,7 @@ use EveryWorkflow\MongoBundle\Repository\BaseDocumentRepository;
 use EveryWorkflow\MongoBundle\Support\Attribute\RepositoryAttribute;
 use EveryWorkflow\StaticBlockBundle\Document\StaticBlockDocument;
 
-#[RepositoryAttribute(documentClass: StaticBlockDocument::class, primaryKey: 'block_key')]
+#[RepositoryAttribute(documentClass: StaticBlockDocument::class, primaryKey: '_id')]
 class StaticBlockRepository extends BaseDocumentRepository implements StaticBlockRepositoryInterface
 {
     // Something

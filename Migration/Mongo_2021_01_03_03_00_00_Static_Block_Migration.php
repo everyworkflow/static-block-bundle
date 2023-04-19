@@ -22,11 +22,7 @@ class Mongo_2021_01_03_03_00_00_Static_Block_Migration implements MigrationInter
 
     public function migrate(): bool
     {
-        $indexKeys = [];
-        foreach ($this->staticBlockRepository->getIndexKeys() as $key) {
-            $indexKeys[$key] = 1;
-        }
-        $this->staticBlockRepository->getCollection()->createIndex($indexKeys, ['unique' => true]);
+        $this->staticBlockRepository->getCollection()->createIndex(['block_key' => 1], ['unique' => true]);
         return self::SUCCESS;
     }
 
