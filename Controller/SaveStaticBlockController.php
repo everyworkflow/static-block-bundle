@@ -69,7 +69,7 @@ class SaveStaticBlockController extends AbstractController
                     $itemByKey = $this->staticBlockRepository->findOne(['block_key' => $submitData['block_key']]);
                     if ($itemByKey) {
                         return new JsonResponse([
-                            'message' => "Static block with key '${submitData['block_key']}' already exists.",
+                            'message' => 'Static block with key ' . $submitData['block_key'] . ' already exists.',
                         ], JsonResponse::HTTP_BAD_REQUEST);
                     }
                 } catch (\Exception $e) {
